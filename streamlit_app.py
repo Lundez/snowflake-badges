@@ -17,7 +17,7 @@ def get_fruit_list(my_cnx) -> pd.DataFrame:
 
 def insert_into_streamlit(fruit: str, my_cnx):
     with my_cnx.cursor() as my_cur:
-        my_cur.execute(f"insert into pc_rivery_db.public.fruit_load_list values ('{add_fruit}');")
+        my_cur.execute(f"insert into pc_rivery_db.public.fruit_load_list values ('{fruit}');")
         return f"Thanks for adding {fruit}"
 
 def main():
