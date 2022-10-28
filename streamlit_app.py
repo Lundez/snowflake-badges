@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import pandas as pd
 import snowflake.connector
+from urllib.error import URLError
 
 def main():
     st.title("My Parents New Healthy Diner")
@@ -41,6 +42,8 @@ def main():
     add_fruit = st.text_input("Add a fruit")
     if len(add_fruit):
         st.write(f"Thanks for adding fruit ({add_fruit})")
+        st.stop()
+        my_cur.execute(f"insert into pc_rivery_db.public.fruit_load_list values ('{add_fruit}');")
 
 if __name__ == '__main__':
     main()
