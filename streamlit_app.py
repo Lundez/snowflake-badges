@@ -15,6 +15,11 @@ def get_fruit_list(my_cnx) -> pd.DataFrame:
         my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
         return my_cur.fetchall()
 
+def insert_into_streamlit(fruit: str, my_cnx):
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute(f"insert into pc_rivery_db.public.fruit_load_list values ('{add_fruit}');")
+        return f"Thanks for adding {fruit}"
+
 def main():
     st.title("My Parents New Healthy Diner")
 
@@ -47,14 +52,11 @@ def main():
     my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])
     st.header("The fruit list contains: ")
     if st.button("Show Fruit List"):
-        
         st.dataframe(get_fruit_list(my_cnx))
 
     add_fruit = st.text_input("Add a fruit")
-    if len(add_fruit):
-        st.write(f"Thanks for adding fruit ({add_fruit})")
-        st.stop()
-        my_cur.execute(f"insert into pc_rivery_db.public.fruit_load_list values ('{add_fruit}');")
+    if st.button("Add Fruit to List"):
+        st.write(insert_into_streamlit(add_fruit, my_cnx))
 
 if __name__ == '__main__':
     main()
