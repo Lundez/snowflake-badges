@@ -10,7 +10,7 @@ def get_fruity_data(fruit: str) -> pd.DataFrame:
     fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
     return fruityvice_normalized
 
-def get_fruit_list() -> pd.DataFrame:
+def get_fruit_list(my_cnx) -> pd.DataFrame:
     with my_cnx.cursor() as my_cur:
         my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
         return my_cur.fetchall()
@@ -48,7 +48,7 @@ def main():
     st.header("The fruit list contains: ")
     if st.button("Show Fruit List"):
         
-        st.dataframe(get_fruit_list())
+        st.dataframe(get_fruit_list(my_cnx))
 
     add_fruit = st.text_input("Add a fruit")
     if len(add_fruit):
