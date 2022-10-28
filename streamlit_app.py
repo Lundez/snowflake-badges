@@ -10,6 +10,11 @@ def get_fruity_data(fruit: str) -> pd.DataFrame:
     fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
     return fruityvice_normalized
 
+def get_fruit_list() -> pd.DataFrame:
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
+        return my_cur.fetchall()
+
 def main():
     st.title("My Parents New Healthy Diner")
 
@@ -40,11 +45,10 @@ def main():
         st.error()
 
     my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])
-    my_cur = my_cnx.cursor()
-    my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
-    my_data_row = my_cur.fetchall()
     st.header("The fruit list contains: ")
-    st.dataframe(my_data_row)
+    if st.button("Show Fruit List"):
+        
+        st.dataframe(get_fruit_list())
 
     add_fruit = st.text_input("Add a fruit")
     if len(add_fruit):
