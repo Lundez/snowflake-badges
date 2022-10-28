@@ -38,5 +38,9 @@ def main():
     st.header("The fruit list contains: ")
     st.dataframe(my_data_row)
 
+    add_fruit = st.text_input("Add a fruit")
+    if len(add_fruit):
+        st.write(f"Thanks for adding fruit ({add_fruit})")
+
 if __name__ == '__main__':
     main()
