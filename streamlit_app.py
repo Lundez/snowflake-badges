@@ -34,9 +34,9 @@ def main():
     my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])
     my_cur = my_cnx.cursor()
     my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
-    my_data_row = my_cur.fetchone()
-    st.text("The fruit list contains: ")
-    st.text(my_data_row)
+    my_data_row = my_cur.fetchall()
+    st.header("The fruit list contains: ")
+    st.dataframe(my_data_row)
 
 if __name__ == '__main__':
     main()
